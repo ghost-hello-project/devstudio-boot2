@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.laolang.devstudioboot2</groupId>
+        <artifactId>devstudio-boot2</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>devstudio-boot-framework</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>devstudio-boot-common</module>
+        <module>devstudio-boot-web-spring-boot-starter</module>
+    </modules>
+
+</project>

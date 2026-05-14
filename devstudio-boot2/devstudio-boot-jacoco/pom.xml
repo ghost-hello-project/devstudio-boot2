@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.laolang.devstudioboot2</groupId>
+        <artifactId>devstudio-boot2</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>devstudio-boot-jacoco</artifactId>
+
+    <dependencies>
+        <!-- devstudio-boot framework -->
+        <dependency>
+            <groupId>com.laolang.devstudioboot2</groupId>
+            <artifactId>devstudio-boot-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.laolang.devstudioboot2</groupId>
+            <artifactId>devstudio-boot-web-spring-boot-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- devstudio-boot module -->
+        <dependency>
+            <groupId>com.laolang.devstudioboot2</groupId>
+            <artifactId>devstudio-boot-module-system-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.laolang.devstudioboot2</groupId>
+            <artifactId>devstudio-boot-module-system-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>aggregate-reports</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 排序不需要统计的类 -->
+                            <excludes>
+                                <!-- mappstruct -->
+                                <exclude>**/*MapperImpl.class</exclude>
+                            </excludes>
+                            <!-- 报告输出目录 -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

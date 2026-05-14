@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.laolang.devstudioboot2</groupId>
+        <artifactId>devstudio-boot2</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>devstudio-boot-start</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.laolang.devstudioboot2</groupId>
+            <artifactId>devstudio-boot-module-system-biz</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <dev.skip.docker>true</dev.skip.docker>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>stg</id>
+            <properties>
+                <spring.profiles.active>stg</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prd</id>
+            <properties>
+                <spring.profiles.active>prd</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> <!-- 将引入的 jar 打入其中 -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>ghost/postman-boot2:0.0.1</name>
+                            <build>
+                                <!-- Dockerfile 位置 -->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                <!-- 构建上下文 -->
+                                <contextDir>${project.basedir}</contextDir>
+                                <!-- 自动清理旧镜像 -->
+                                <cleanup>try</cleanup>
+                            </build>
+                        </image>
+                    </images>
+                    <skip>${dev.skip.docker}</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
